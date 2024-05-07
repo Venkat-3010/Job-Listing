@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const jobSchema = new Schema(
+const jobSchema = new mongoose.Schema(
     {
         companyName: {
             type: String,
@@ -47,7 +47,7 @@ const jobSchema = new Schema(
             required: true,
         },
         refUserId: {
-            type: mongoose.isObjectIdOrHexString,
+            type: mongoose.ObjectId,
         },
     },
     {

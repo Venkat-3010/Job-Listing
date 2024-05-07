@@ -36,7 +36,7 @@ const registerUser = async (req, res, next) => {
     }
 };
 
-const longinUser = async (req, res, next) => {
+const loginUser = async (req, res, next) => {
     try{
         const { password, email } = req.body;
         if(!email || !password) {
@@ -77,5 +77,5 @@ const longinUser = async (req, res, next) => {
 
 module.exports = {
     registerUser,
-    longinUser
+    loginUser
 };

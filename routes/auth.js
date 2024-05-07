@@ -1,11 +1,8 @@
 const express = require('express');
-const app = express.Router();
-const jobController = require('../controller/job');
-const verifyToken = require('../middlewares/verifyAuth');
+const router = express.Router();
+const authController = require('../controller/user');
 
-router.post("/create", verifyToken, jobController.createJobPost);
-router.get("/job-detals/:jobId/:userId", jobController.getJobDetalsById);
-router.put("/update/:jobId", verifyToken, jobController.updateJobDetalsById);
-router.get("/all/:userId", jobController.getAlljobs);
+router.post('/register', authController.registerUser);
+router.post("/login", authController.loginUser);
 
 module.exports = router;

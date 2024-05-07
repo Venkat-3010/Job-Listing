@@ -85,7 +85,7 @@ const getJobDetailsById = async (req, res, next) => {
     }
 };
 
-const updateJobdetailsById = async (req, res, next) => {
+const updateJobDetailsById = async (req, res, next) => {
     try{
         const JobId = req.params.jobId;
         const {
@@ -189,6 +189,6 @@ const getAlljobs = async (req, res, next) => {
 module.exports = {
     createJobPost,
     getJobDetailsById,
-    updateJobdetailsById,
+    updateJobDetailsById,
     getAlljobs,
 };
