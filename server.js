@@ -2,6 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const authRoute = require('./routes/auth');
+const jobRoute = require('./routes/job');
 
 const app = express();
 
@@ -16,6 +18,9 @@ app.get("/health", (req, res) => {
         time: new Date(), 
     });
 });
+
+app.use("/api/v1/job", jobRoute);
+app.use("/api/v1/auth", authRoute);
 
 app.use((error, req, res, next) => {
     console.log(error.message);
