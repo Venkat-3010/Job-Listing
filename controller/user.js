@@ -13,7 +13,7 @@ const registerUser = async (req, res, next) => {
         const formattedEmail = email.toLowerCase();
         if(!name || !email || !password || !mobile){
             return res.status(400).json({
-                message: 'Please fill all the fields'
+                errorMessage: "Bad request",
             });
         }
         const isExistingUser = await User.findOne({ email: formattedEmail });
@@ -22,14 +22,14 @@ const registerUser = async (req, res, next) => {
                 message: 'User already exists'
             });
         }
-        const hashedPassword = await bcrypt.hash(password, 12);
+        const hashedPassword = await bcrypt.hash(password, 10);
         const userData = new User({
             name,
-            email,
+            email: formattedEmailAddressmail,
             password:  hashedPassword,
             mobile
         });
-        await User.save();
+        await userData.save();
         res.json({ message: 'User created successfully'});
     } catch (err) {
         next(err);
@@ -41,13 +41,13 @@ const loginUser = async (req, res, next) => {
         const { password, email } = req.body;
         if(!email || !password) {
             return res.status(400).json({
-                message: 'Please fill all the fields'
+                errorMessage: 'Please fill all the fields'
             });
         }
 
         const userDetails = await User.findOne({ email: email });
         if(!userDetails){
-            return res.status(404).json({
+            return res.status(409).json({
                 message: 'User not found'
             });
         }
@@ -61,7 +61,7 @@ const loginUser = async (req, res, next) => {
 
         const token = jwt.sign(
             { userId: userDetails._id },
-            process.env.JWT_SECRET,
+            process.env.SECRET_KEY,
             { expiresIn: '60h' }
         );
         res.json({
