@@ -8,13 +8,13 @@ const createJobPost = async (req, res, next) => {
             logoUrl,
             title,
             description,
-            location,
             salary,
-            jobType,
+            location,
             duration,
-            information,
-            skills,
             locationType,
+            skills,
+            jobType,
+            information,
         } = req.body;
 
         if(
@@ -22,13 +22,13 @@ const createJobPost = async (req, res, next) => {
             !logoUrl ||
             !title ||
             !description ||
-            !location ||
             !salary ||
-            !jobType ||
+            !location ||
             !duration ||
-            !information ||
+            !locationType ||
             !skills ||
-            !locationType
+            !jobType ||
+            !information
         ){
             return res.status(400).json({
                 message: 'Please fill all the fields'
@@ -40,13 +40,13 @@ const createJobPost = async (req, res, next) => {
             logoUrl,
             title,
             description,
-            location,
             salary,
-            jobType,
+            location,
             duration,
-            information,
-            skills,
             locationType,
+            skills,
+            jobType,
+            information,
             refUserId: currentUserId
         });
 
@@ -93,26 +93,27 @@ const updateJobDetailsById = async (req, res, next) => {
             logoUrl,
             title,
             description,
-            location,
             salary,
-            jobType,
+            location,
             duration,
-            information,
-            skills,
             locationType,
+            skills,
+            jobType,
+            information,
         } = req.body;
 
-        if(!companyName ||
+        if(
+            !companyName ||
             !logoUrl ||
             !title ||
             !description ||
-            !location ||
             !salary ||
-            !jobType ||
+            !location ||
             !duration ||
-            !information ||
+            !locationType ||
             !skills ||
-            !locationType
+            !jobType ||
+            !information
         ){
             return res.status(400).json({
                 message: 'Please fill all the fields'
@@ -140,13 +141,13 @@ const updateJobDetailsById = async (req, res, next) => {
                     logoUrl,
                     title,
                     description,
-                    location,
                     salary,
-                    jobType,
+                    location,
                     duration,
-                    information,
-                    skills,
                     locationType,
+                    skills,
+                    jobType,
+                    information,
                 },
             }
         );
