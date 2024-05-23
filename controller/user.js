@@ -29,7 +29,7 @@ const registerUser = async (req, res, next) => {
             password:  hashedPassword,
             mobile
         });
-        await user.save();
+        await User.save();
         res.json({ message: 'User created successfully'});
     } catch (err) {
         next(err);
