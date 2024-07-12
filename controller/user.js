@@ -45,7 +45,7 @@ const loginUser = async (req, res, next) => {
             });
         }
 
-        const userDetails = await User.findOne({ email: email });
+        const userDetails = await User.findOne({ email: email.toLowerCase() });
         if(!userDetails){
             return res.status(409).json({
                 message: 'User not found'
