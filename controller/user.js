@@ -13,7 +13,7 @@ const registerUser = async (req, res, next) => {
         const formattedEmail = email.toLowerCase();
         if(!name || !email || !password || !mobile){
             return res.status(400).json({
-                errorMessage: "Bad request",
+                message: "Please enter all fields",
             });
         }
         const isExistingUser = await User.findOne({ email: formattedEmail });
@@ -38,7 +38,7 @@ const registerUser = async (req, res, next) => {
 
 const loginUser = async (req, res, next) => {
     try{
-        const { password, email } = req.body;
+        const { email, password } = req.body;
         if(!email || !password) {
             return res.status(400).json({
                 errorMessage: 'Please fill all the fields'
