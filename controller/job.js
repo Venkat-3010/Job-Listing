@@ -1,6 +1,6 @@
 const Job = require('../models/job');
 
-const createJobPost = async (req, res, next) => {
+const createJobPost = async (req, res) => {
     try{
         const currentUserId = req.currentUserId;
         const {
@@ -53,11 +53,12 @@ const createJobPost = async (req, res, next) => {
         await jobDetails.save();
         res.json({ message: 'Job created successfully'});
     }catch(e) {
-        next(e);
+        console.log(e);
+        res.status(500).json({ message: 'Server Error' });
     }
 };
 
-const getJobDetailsById = async (req, res, next) => {
+const getJobDetailsById = async (req, res) => {
     try{
         const { jobId, userId } = req.params;
 
@@ -81,11 +82,12 @@ const getJobDetailsById = async (req, res, next) => {
 
             res.json({jobDetails, isEditable: isEditable});
             }catch(err) {
-            next(err);
+                console.log(err);
+                res.status(500).json({ message: 'Server Error' });
     }
 };
 
-const updateJobDetailsById = async (req, res, next) => {
+const updateJobDetailsById = async (req, res) => {
     try{
         const JobId = req.params.jobId;
         const {
@@ -153,14 +155,14 @@ const updateJobDetailsById = async (req, res, next) => {
         );
         res.json({ message: 'Job updated successfully'});
     } catch (err) {
-        next(err);
+        console.log(err);
+        res.status(500).json({ message: 'Server Error' });
     }
 };
 
-const getAlljobs = async (req, res, next) => {
+const getAlljobsfilter = async (req, res) => {
     try{
         const searchQuery = req.query.searchQuery || "";
-        const activeUserId = req.params.userId || "";
         const skills = req.query.skills;
         let filteredSkills;
         let filter = {};
@@ -183,13 +185,25 @@ const getAlljobs = async (req, res, next) => {
         });
         res.json({data: jobList});
     }catch(err) {
-        next(err);
+        console.log(err);
+        res.status(500).json({ message: 'Server Error' });
     }
 };
+
+const getAlljobs = async (req, res) => {
+    try{
+        const jobList = await Job.find({});
+        res.json({data: jobList});
+    }catch(err) {
+        console.log(err);
+        res.status(500).json({ message: 'Server Error' });
+    }
+}
 
 module.exports = {
     createJobPost,
     getJobDetailsById,
     updateJobDetailsById,
     getAlljobs,
+    getAlljobsfilter,
 };

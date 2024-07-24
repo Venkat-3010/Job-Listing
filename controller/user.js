@@ -1,14 +1,15 @@
-const User = require('../models/user');
+const User = require('../models/users');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const registerUser = async (req, res, next) => {
+const registerUser = async (req, res) => {
+    console.log("hi");
     try{
         const {
-            name,
             email,
             password,
-            mobile
+            mobile,
+            name,
         } = req.body;
         const formattedEmail = email.toLowerCase();
         if(!name || !email || !password || !mobile){
@@ -27,16 +28,21 @@ const registerUser = async (req, res, next) => {
             name,
             email: formattedEmail,
             password:  hashedPassword,
-            mobile
+            mobile,
         });
         await userData.save();
         res.json({ message: 'User created successfully'});
-    } catch (err) {
-        next(err);
+    } catch (error) {
+    
+        console.log("jaaa", req.body.name);
+        console.log(error);
+        res.status(500).json({
+            message: 'Server error'
+        });
     }
 };
 
-const loginUser = async (req, res, next) => {
+const loginUser = async (req, res) => {
     try{
         const { email, password } = req.body;
         if(!email || !password) {
@@ -70,8 +76,11 @@ const loginUser = async (req, res, next) => {
             userId: userDetails._id,
             name: userDetails.name,
         });
-    } catch (err) {
-        next(err);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            message: 'Server error'
+        });
     }
 };
 
